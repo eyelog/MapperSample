@@ -4,10 +4,14 @@ import ru.eyelog.mappersample.datasource.mappers.essential.NotRequired
 
 data class SampleDTO(
     val id: Long,
-    val name: String,
-    @Deprecated("Test") val number: Int?,
-    @NotRequired val isChecked: Boolean?,
-    val type: String,
-    val subData: SampleSubDTO,
-    val subDataList: List<SampleSubDTO>
+    val name: String?,
+    val subName: String?,
+    val number: Int?,
+    @NotRequired val subNumber: Int?,
+    val isChecked: Boolean?,
+    val type: String?,
+    val data: SampleSubDTO?,
+    @NotRequired val subData: SampleSubDTO?,
+    val dataList: List<SampleSubDTO>?,
+    val subDataList: List<SampleSubDTO>?
 )

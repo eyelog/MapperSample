@@ -13,7 +13,7 @@ class SubSampleEssentialMapper @Inject constructor() : EssentialMapper<SampleSub
                 name = name.orDefault(),
                 number =  number.orDefault(),
                 isChecked = isChecked.orDefault(),
-                typeMode = SampleType.valueByCode(type)
+                typeMode = SampleType.valueByCode(type.orDefault())
             )
         }
     }

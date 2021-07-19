@@ -6,7 +6,7 @@ import io.reactivex.Observable
 import io.reactivex.Single
 
 fun <T : Any, R : Any> T.essentialMap(mapper: EssentialMapper<T, R>): R = let(mapper::invoke)
-fun <T : Any, R : Any> List<T?>?.essentialMap(mapper: EssentialMapper<T, R>): List<R> {
+fun <T : Any, R : Any> List<T>.essentialMap(mapper: EssentialMapper<T, R>): List<R> {
     return deepAssert().map(mapper)
 }
 

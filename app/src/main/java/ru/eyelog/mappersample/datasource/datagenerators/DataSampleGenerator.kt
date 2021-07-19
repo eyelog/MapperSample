@@ -14,15 +14,33 @@ class DataSampleGenerator @Inject constructor() {
             SampleDTO(
                 id = 0L,
                 name = "name 0",
-                number = null,
-                isChecked = null,
+                subName = "name 0",
+                number = 0,
+                subNumber = 10,
+                isChecked = true,
                 type = "first type",
+                data =  SampleSubDTO(
+                    id = 0L,
+                    name = "name 0",
+                    number = 0,
+                    isChecked = true,
+                    type = "first type"
+                ),
                 subData =  SampleSubDTO(
                     id = 0L,
                     name = "name 0",
                     number = 0,
                     isChecked = true,
                     type = "first type"
+                ),
+                dataList = listOf(
+                    SampleSubDTO(
+                        id = 0L,
+                        name = "name 0",
+                        number = 0,
+                        isChecked = true,
+                        type = "first type"
+                    )
                 ),
                 subDataList = listOf(
                     SampleSubDTO(
@@ -38,27 +56,47 @@ class DataSampleGenerator @Inject constructor() {
 
         outData.add(
             SampleDTO(
-                id = 1L,
-                name = "name 1",
-                number = 3,
-                isChecked = true,
-                type = "second type",
-                subData = SampleSubDTO(
+                id = 0L,
+                name = "name 0",
+                subName = null,
+                number = 1,
+                subNumber = null,
+                isChecked = null,
+                type = null,
+                data =  SampleSubDTO(
                     id = 0L,
-                    name = "name 1",
+                    name = "name 0",
                     number = 0,
                     isChecked = true,
-                    type = "second type"
+                    type = "first type"
                 ),
-                subDataList = listOf(
+                subData =  null,
+                dataList = listOf(
                     SampleSubDTO(
                         id = 0L,
-                        name = "name 1",
+                        name = "name 0",
                         number = 0,
                         isChecked = true,
-                        type = "second type"
+                        type = "first type"
                     )
-                )
+                ),
+                subDataList = null
+            )
+        )
+
+        outData.add(
+            SampleDTO(
+                id = 0L,
+                name = "name 0",
+                subName = null,
+                number = null,
+                subNumber = null,
+                isChecked = null,
+                type = null,
+                data =  null,
+                subData =  null,
+                dataList = null,
+                subDataList = null
             )
         )
 

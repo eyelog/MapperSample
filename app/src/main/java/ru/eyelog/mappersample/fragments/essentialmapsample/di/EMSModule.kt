@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModelProvider
 import dagger.Module
 import dagger.Provides
 import ru.eyelog.mappersample.datasource.datagenerators.DataSampleGenerator
+import ru.eyelog.mappersample.datasource.mappers.essential.SampleEssentialMapper
+import ru.eyelog.mappersample.datasource.mappers.essential.SubSampleEssentialMapper
 import ru.eyelog.mappersample.datasource.mappers.simple.SimpleMapper
 import ru.eyelog.mappersample.fragments.essentialmapsample.EMSViewModel
 
@@ -21,5 +23,9 @@ class EMSModule {
     fun provideDataGenerator() = DataSampleGenerator()
 
     @Provides
-    fun provideSimpleMapper() = SimpleMapper()
+    fun provideSampleEssentialMapper(subSampleEssentialMapper: SubSampleEssentialMapper) =
+        SampleEssentialMapper(subSampleEssentialMapper)
+
+    @Provides
+    fun provideSubSampleEssentialMapper() = SubSampleEssentialMapper()
 }

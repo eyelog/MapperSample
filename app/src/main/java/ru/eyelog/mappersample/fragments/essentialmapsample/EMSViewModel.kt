@@ -12,13 +12,15 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
 import ru.eyelog.mappersample.datasource.datagenerators.DataSampleGenerator
+import ru.eyelog.mappersample.datasource.mappers.essential.SampleEssentialMapper
+import ru.eyelog.mappersample.datasource.mappers.essential.essentialSingleListMap
 import ru.eyelog.mappersample.datasource.mappers.simple.SimpleMapper
 import ru.eyelog.mappersample.datasource.models.dto.SampleDTO
 import ru.eyelog.mappersample.datasource.models.to.SampleDO
 
 class EMSViewModel (
     private val dataSampleGenerator: DataSampleGenerator,
-    private val simpleMapper: SimpleMapper
+    private val simpleEssentialMapper: SampleEssentialMapper
 ): ViewModel(), LifecycleObserver {
 
     val sampleLiveData: LiveData<List<SampleDO>> get() = _sampleLiveData
@@ -35,7 +37,7 @@ class EMSViewModel (
     fun startThread(){
 
         Single.just(data)
-            .map { simpleMapper.mapDTOtoTO(it) }
+            .essentialSingleListMap(simpleEssentialMapper)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { data ->

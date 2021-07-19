@@ -10,19 +10,28 @@ import kotlin.reflect.full.memberProperties
 abstract class EssentialMapper<T : Any, R> : Function<T, R> {
     private val missedParams = HashSet<String>()
 
-    @Throws(EssentialParamMissingException::class)
+    //    @Throws(EssentialParamMissingException::class)
     operator fun invoke(raw: T): R = apply(raw)
 
-    @Throws(EssentialParamMissingException::class)
+    //    @Throws(EssentialParamMissingException::class)
     final override fun apply(raw: T): R {
         missedParams.clear()
         checkMisses(raw)
 
         if (missedParams.isNotEmpty()) {
-            throw EssentialParamMissingException(
-                missedParams,
-                raw
-            )
+
+            // В случае если мы хотим отправлять отчёт
+            val missingsReport = "Params are missing in received object.\n" +
+                "\tObject -> $raw\n" +
+                "\tParams -> ${missedParams.joinToString(",\n\t")}"
+//            CrashManager.logMessage("missingsReport")
+            Log.i("Logcat", missingsReport)
+
+            // В случае если мы хотим крашить приложение
+//            throw EssentialParamMissingException(
+//                missedParams,
+//                raw
+//            )
         }
 
         return transform(raw)
@@ -33,11 +42,10 @@ abstract class EssentialMapper<T : Any, R> : Function<T, R> {
     private fun checkMisses(raw: T) {
         raw::class.memberProperties.forEach { property ->
 
-            if (property.findAnnotation<NotRequired>() == null) {
-                val value = property.getter.call(raw)
+            val skip = property.findAnnotation<NotRequired>() == null
 
-                Log.i("Logcat", "            ")
-                Log.i("Logcat", "value $value")
+            if (skip) {
+                val value = property.getter.call(raw)
 
                 val statuses = ArrayList<String>()
 
@@ -49,8 +57,6 @@ abstract class EssentialMapper<T : Any, R> : Function<T, R> {
                     .mapNotNull { it as? ExcludeCheck }
                     .map { it.expressionClass }
 
-                Log.i("Logcat", "property.annotations ${property.annotations}")
-
                 if (value != null) {
                     property.annotations.asSequence()
                         .mapNotNull { it as? Check }
@@ -61,15 +67,9 @@ abstract class EssentialMapper<T : Any, R> : Function<T, R> {
                         .map { it(value) }
                         .filter { it.isNotEmpty() }
                         .toCollection(statuses)
-
-                    Log.i("Logcat", "property $property")
-                    Log.i("Logcat", "property.parameters ${property.parameters}")
                 } else {
-                    Log.i("Logcat", "statuses.add(null)")
                     statuses.add("null")
                 }
-
-                Log.i("Logcat", "statuses $statuses")
 
                 if (statuses.isNotEmpty()) {
                     missedParams.add("${property.name} $statuses")

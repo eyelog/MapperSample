@@ -37,7 +37,7 @@ class RVAdapter : RecyclerView.Adapter<RVAdapter.RVHolder>() {
     override fun onBindViewHolder(holder: RVHolder, position: Int) {
         holder.tvTextName?.text = data[position].name
         holder.tvTextNumber?.text = data[position].number.toString()
-        holder.tvTextType?.text = data[position].typeMode.name
+        holder.tvTextType?.text = data[position].type.name
     }
 
     override fun getItemCount() = data.size

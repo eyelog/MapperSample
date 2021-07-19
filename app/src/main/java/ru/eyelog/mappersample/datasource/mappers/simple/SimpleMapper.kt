@@ -18,32 +18,39 @@ class SimpleMapper {
                 SampleDO(
                     id = it.id,
                     name = it.name.orDefault(),
+                    subName = it.name.orDefault(),
                     number =  it.number.orDefault(),
+                    subNumber =  it.subNumber.orDefault(),
                     isChecked = it.isChecked.orDefault(),
-                    typeMode = SampleType.valueByCode(it.type),
-                    subData = mapSubDTOtoSubTO(it.subDataList)[0],
-                    subDataList = mapSubDTOtoSubTO(it.subDataList)
+                    type = SampleType.valueByCode(it.type.orDefault()),
+                    data = mapSubDTOtoSubTO(it.data),
+                    subData = mapSubDTOtoSubTO(it.subData),
+                    dataList = mapSubDTOtoSubTOList(it.dataList),
+                    subDataList = mapSubDTOtoSubTOList(it.subDataList)
                 )
             )
         }
         return outData
     }
 
-    private fun mapSubDTOtoSubTO(data: List<SampleSubDTO>): List<SampleSubDO>{
+    private fun mapSubDTOtoSubTOList(data: List<SampleSubDTO>?): List<SampleSubDO>{
 
         val outData = mutableListOf<SampleSubDO>()
 
-        data.all {
+        data?.all {
             outData.add(
-                SampleSubDO(
-                    id = it.id,
-                    name = it.name.orDefault(),
-                    number =  it.number.orDefault(),
-                    isChecked = it.isChecked.orDefault(),
-                    typeMode = SampleType.valueByCode(it.type),
-                )
+                mapSubDTOtoSubTO(it)
             )
         }
         return outData
     }
+
+    private fun mapSubDTOtoSubTO(data: SampleSubDTO?) =
+        SampleSubDO(
+            id = data?.id.orDefault(),
+            name = data?.name.orDefault(),
+            number = data?.number.orDefault(),
+            isChecked = data?.isChecked.orDefault(),
+            typeMode = SampleType.valueByCode(data?.type.orDefault()),
+        )
 }
