@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">MapperSample</string>
+
+    <string name="sms_fragment_menu">SM fragment</string>
+    <string name="ems_fragment_menu">EM fragment</string>
+
+    <string name="sms_fragment">Simple mapper fragment</string>
+    <string name="ems_fragment">Essential mapper fragment</string>
+</resources>

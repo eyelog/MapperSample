@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/fragment00"
+        android:title="@string/sms_fragment_menu" />
+
+    <item
+        android:id="@+id/fragment01"
+        android:title="@string/ems_fragment_menu" />
+</menu>
