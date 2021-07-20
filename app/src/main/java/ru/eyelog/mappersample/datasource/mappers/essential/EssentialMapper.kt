@@ -21,11 +21,13 @@ abstract class EssentialMapper<T : Any, R> : Function<T, R> {
         if (missedParams.isNotEmpty()) {
 
             // В случае если мы хотим отправлять отчёт
-            val missingsReport = "Params are missing in received object.\n" +
+            val missingReport = "Params are missing in received object.\n" +
                 "\tObject -> $raw\n" +
                 "\tParams -> ${missedParams.joinToString(",\n\t")}"
+
+            // Пример команды матрики
 //            CrashManager.logMessage("missingsReport")
-            Log.i("Logcat", missingsReport)
+            Log.i("Logcat", missingReport)
 
             // В случае если мы хотим крашить приложение
 //            throw EssentialParamMissingException(
@@ -80,19 +82,5 @@ abstract class EssentialMapper<T : Any, R> : Function<T, R> {
 
     companion object {
         private val globalChecks = ArrayList<Pair<KClass<*>, KClass<out CheckerClass>>>()
-
-        private fun addGlobalCheck(clsCheckPair: Pair<KClass<*>, KClass<out CheckerClass>>): Companion {
-            globalChecks.add(clsCheckPair)
-            return this
-        }
-
-        fun addGlobalCheck(
-            clsToCheck: KClass<*>,
-            clsWhoCheck: KClass<out CheckerClass>
-        ): Companion {
-            return addGlobalCheck(
-                clsToCheck to clsWhoCheck
-            )
-        }
     }
 }
