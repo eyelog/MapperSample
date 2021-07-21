@@ -28,7 +28,7 @@ abstract class EssentialMapper<T : Any, R> : Function<T, R> {
                     "\tParams -> ${missedParams.joinToString(",\n\t")}"
 
                 // Пример команды матрики
-                // CrashManager.logMessage("missingsReport")
+                // CrashManager.logMessage("missingReport")
                 Log.i("Logcat", missingReport)
             } else {
                 // В случае если мы хотим крашить приложение
