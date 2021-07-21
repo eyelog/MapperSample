@@ -2,6 +2,7 @@ package ru.eyelog.mappersample.datasource.mappers.essential
 
 import android.util.Log
 import io.reactivex.functions.Function
+import ru.eyelog.mappersample.BuildConfig
 import kotlin.reflect.KClass
 import kotlin.reflect.full.createInstance
 import kotlin.reflect.full.findAnnotation
@@ -10,30 +11,32 @@ import kotlin.reflect.full.memberProperties
 abstract class EssentialMapper<T : Any, R> : Function<T, R> {
     private val missedParams = HashSet<String>()
 
-    //    @Throws(EssentialParamMissingException::class)
+    @Throws(EssentialParamMissingException::class)
     operator fun invoke(raw: T): R = apply(raw)
 
-    //    @Throws(EssentialParamMissingException::class)
+    @Throws(EssentialParamMissingException::class)
     final override fun apply(raw: T): R {
         missedParams.clear()
         checkMisses(raw)
 
         if (missedParams.isNotEmpty()) {
 
-            // В случае если мы хотим отправлять отчёт
-            val missingReport = "Params are missing in received object.\n" +
-                "\tObject -> $raw\n" +
-                "\tParams -> ${missedParams.joinToString(",\n\t")}"
+            if (BuildConfig.FLAVOR == "soft"){
+                // В случае если мы хотим отправлять отчёт
+                val missingReport = "Params are missing in received object.\n" +
+                    "\tObject -> $raw\n" +
+                    "\tParams -> ${missedParams.joinToString(",\n\t")}"
 
-            // Пример команды матрики
-//            CrashManager.logMessage("missingsReport")
-            Log.i("Logcat", missingReport)
-
-            // В случае если мы хотим крашить приложение
-//            throw EssentialParamMissingException(
-//                missedParams,
-//                raw
-//            )
+                // Пример команды матрики
+                // CrashManager.logMessage("missingsReport")
+                Log.i("Logcat", missingReport)
+            } else {
+                // В случае если мы хотим крашить приложение
+                throw EssentialParamMissingException(
+                    missedParams,
+                    raw
+                )
+            }
         }
 
         return transform(raw)
