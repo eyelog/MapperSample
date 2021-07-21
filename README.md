@@ -1,4 +1,4 @@
-# Project Name
+# Essential mapper
 
 Приложение для реализации и презитации EssentialMapper-a
 
